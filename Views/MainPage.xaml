@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Weather.Views.MainPage"
+             BackgroundImageSource="weather.jpg"
+             BackgroundColor="#E6F3FF">
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
+            
+            <!-- Title Frame -->
+            <Frame BackgroundColor="#40000000"
+                   CornerRadius="15"
+                   Margin="0,10"
+                   Padding="20,10">
+                <Label Text="Weather Forecast"
+                       TextColor="White"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <Frame.Shadow>
+                    <Shadow Brush="#40000000"
+                            Offset="0,4"
+                            Radius="8" />
+                </Frame.Shadow>
+            </Frame>
+
+            <!-- Main Weather Frame -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="20"
+                   Padding="20"
+                   Margin="0,10">
+                <Frame.Shadow>
+                    <Shadow Brush="#40000000"
+                            Offset="0,4"
+                            Radius="8" />
+                </Frame.Shadow>
+                <StackLayout Spacing="15">
+                    <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                     IsVisible="{Binding IsLoading}"
+                                     Color="#0077BE"
+                                     HorizontalOptions="Center" />
+                    
+                    <Label Text="{Binding WeatherData.Name}"
+                           SemanticProperties.HeadingLevel="Level1"
+                           FontSize="32"
+                           TextColor="#005B96"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+                    
+                    <Label Text="{Binding WeatherData.Main.Temp, StringFormat='{0:F1}°C'}"
+                           SemanticProperties.HeadingLevel="Level2"
+                           FontSize="48"
+                           TextColor="#00334D"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+                    
+                    <Label Text="{Binding WeatherData.Weather[0].Description}"
+                           FontSize="18"
+                           TextColor="#0077BE"
+                           HorizontalOptions="Center" />
+                    
+                    <Label Text="{Binding ErrorMessage}"
+                           TextColor="#FF4444"
+                           IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotNullOrEmptyBoolConverter}}"
+                           HorizontalOptions="Center" />
+                </StackLayout>
+            
+            </Frame>
+
+            <!-- Refresh Button -->
+            <Button x:Name="RefreshButton"
+                    Text="Refresh Weather"
+                    Command="{Binding LoadWeatherDataCommand}"
+                    BackgroundColor="#40B4E5"
+                    TextColor="White"
+                    CornerRadius="25"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Padding="25,15"
+                    Margin="0,10"
+                    HorizontalOptions="Center">
+                <Button.Shadow>
+                    <Shadow Brush="#40000000"
+                            Offset="0,4"
+                            Radius="8" />
+                </Button.Shadow>
+            </Button>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
